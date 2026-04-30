@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+.idea/
+.vscode/
+.dotnet-home/
+.appdata/
+.localappdata/
+*.user
+*.suo
+TestResults/
+test_output/
+*.design
+SKILL.md
+.docs/
