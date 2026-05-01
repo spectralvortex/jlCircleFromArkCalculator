@@ -3,26 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CircleFromArcCalculator"
         mc:Ignorable="d"
         Title="Circle From Arc Calculator"
-        Width="1060"
-        Height="720"
-        MinWidth="920"
-        MinHeight="620"
+        Width="840"
+        Height="740"
+        MinWidth="840"
+        MinHeight="740"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource Brush.App.Background}"
         FontFamily="{StaticResource Font.App}">
     <Grid Margin="{StaticResource Space.Window}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.15*" />
-            <ColumnDefinition Width="0.85*" />
+            <ColumnDefinition Width="0.65*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.ColumnSpan="2" Margin="0,0,0,24">
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Margin="0,0,0,24">
             <TextBlock Text="Circle from arc"
                        Foreground="{StaticResource Brush.App.Text}"
                        FontSize="32"
@@ -40,22 +41,26 @@
                 Padding="{StaticResource Space.Panel}"
                 Margin="0,0,18,0">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Sketch"
+                <TextBlock Grid.Column="0"
+                           Text="Sketch"
                            Foreground="{StaticResource Brush.App.SubText}"
                            FontWeight="SemiBold"
                            FontSize="13" />
 
-                <Viewbox Grid.Row="1" Stretch="Uniform" Margin="0,18">
-                    <Canvas Width="520" Height="380">
+                <Viewbox Grid.Row="1" Grid.Column="0" Margin="0,18">
+                    <Canvas Width="{x:Static local:MainWindow.CanvasWidth}" Height="{x:Static local:MainWindow.CanvasHeight}">
                         <Ellipse x:Name="CircleShape"
                                  Stroke="{StaticResource Brush.App.Accent}"
-                                 StrokeThickness="4" />
+                                 StrokeThickness="3" />
                         <Line x:Name="ChordLine"
                               Stroke="{StaticResource Brush.App.Text}"
                               StrokeThickness="4"
@@ -63,22 +68,23 @@
                               StrokeEndLineCap="Round" />
                         <Line x:Name="SagittaLine"
                               Stroke="{StaticResource Brush.App.Blue}"
-                              StrokeThickness="4"
+                              StrokeThickness="3"
                               StrokeStartLineCap="Round"
                               StrokeEndLineCap="Round" />
                         <Line x:Name="RadiusLine"
                               Stroke="{StaticResource Brush.App.Warning}"
                               StrokeThickness="2"
                               StrokeDashArray="4 4" />
-                        <TextBlock x:Name="LabelA" Text="A" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="28" />
-                        <TextBlock x:Name="LabelB" Text="B" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="28" />
-                        <TextBlock x:Name="LabelC" Text="C" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="28" />
-                        <TextBlock x:Name="LabelD" Text="D" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="28" />
-                        <TextBlock x:Name="LabelO" Text="O" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="22" />
+                        <TextBlock x:Name="LabelA" Text="A" Foreground="{StaticResource Brush.App.Blue}" FontWeight="Bold" FontSize="26" />
+                        <TextBlock x:Name="LabelB" Text="B" Foreground="{StaticResource Brush.App.Blue}" FontWeight="Bold" FontSize="26" />
+                        <TextBlock x:Name="LabelC" Text="C" Foreground="{StaticResource Brush.App.Blue}" FontWeight="Bold" FontSize="26" />
+                        <TextBlock x:Name="LabelD" Text="D" Foreground="{StaticResource Brush.App.Blue}" FontWeight="Bold" FontSize="26" />
+                        <TextBlock x:Name="LabelO" Text="O" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="24" />
+                        <TextBlock x:Name="LabelX" Text="⨉" Foreground="{StaticResource Brush.App.Warning}" FontWeight="Bold" FontSize="22" />
                     </Canvas>
                 </Viewbox>
 
-                <TextBlock Grid.Row="2"
+                <TextBlock Grid.Row="2" Grid.Column="0"
                            Text="AB is the chord. CD is the sagitta, measured at 90 degrees from the chord midpoint to the arc."
                            Foreground="{StaticResource Brush.App.SubText}"
                            TextWrapping="Wrap"
@@ -95,40 +101,62 @@
             <Border Background="{StaticResource Brush.App.Panel}"
                     CornerRadius="{StaticResource Radius.Large}"
                     Padding="{StaticResource Space.Panel}">
-                <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
                     <TextBlock Text="Measurements"
-                               Foreground="{StaticResource Brush.App.SubText}"
-                               FontWeight="SemiBold"
-                               FontSize="13" />
+                            Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            Foreground="{StaticResource Brush.App.SubText}"
+                            FontWeight="SemiBold"
+                            FontSize="13" />
 
                     <TextBlock Text="AB chord length (mm)"
-                               Foreground="{StaticResource Brush.App.Text}"
-                               FontSize="15"
-                               Margin="0,18,0,8" />
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Foreground="{StaticResource Brush.App.Text}"
+                            FontSize="15"
+                            Margin="0,18,20,0" />
                     <TextBox x:Name="ChordInput"
-                             Style="{StaticResource ModernTextBox}"
-                             Text="200"
-                             TextChanged="InputChanged" />
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource ModernTextBox}"
+                            Text="120"
+                            TextAlignment="Center"
+                            TextChanged="InputChanged" 
+                            Margin="0,8,0,8"/>
 
                     <TextBlock Text="CD sagitta height (mm)"
-                               Foreground="{StaticResource Brush.App.Text}"
-                               FontSize="15"
-                               Margin="0,18,0,8" />
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Foreground="{StaticResource Brush.App.Text}"
+                            FontSize="15"
+                            Margin="0,18,0,8" />
                     <TextBox x:Name="SagittaInput"
-                             Style="{StaticResource ModernTextBox}"
-                             Text="35"
-                             TextChanged="InputChanged" />
-
-                    <Button Content="Calculate"
-                            Style="{StaticResource PrimaryActionButton}"
-                            Margin="0,22,0,0"
-                            Click="CalculateClicked" />
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Style="{StaticResource ModernTextBox}"
+                            Text="35"
+                            TextAlignment="Center"
+                            TextChanged="InputChanged"
+                            Margin="0,8,0,8" />
 
                     <TextBlock x:Name="ValidationText"
-                               Foreground="{StaticResource Brush.App.Error}"
-                               TextWrapping="Wrap"
-                               Margin="0,14,0,0" />
-                </StackPanel>
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            Foreground="{StaticResource Brush.App.Error}"
+                            TextWrapping="Wrap"
+                            Margin="0,0,0,0" />
+                </Grid>
             </Border>
 
             <Border Grid.Row="1"
@@ -138,7 +166,7 @@
                     Margin="0,18,0,0">
                 <StackPanel>
                     <TextBlock Text="Results"
-                               Foreground="{StaticResource Brush.App.SubText}"
+                               Foreground="{StaticResource Brush.App.Accent}"
                                FontWeight="SemiBold"
                                FontSize="13" />
 
@@ -160,20 +188,23 @@
                                    Grid.Column="1"
                                    Foreground="{StaticResource Brush.App.Text}"
                                    FontSize="24"
-                                   FontWeight="Bold" />
+                                   FontWeight="Bold"
+                                   TextAlignment="Right"
+                                   Margin="24,0,0,0" />
 
                         <TextBlock Grid.Row="1"
                                    Text="Diameter"
                                    Foreground="{StaticResource Brush.App.SubText}"
                                    FontSize="16"
-                                   Margin="0,16,0,0" />
+                                   Margin="0,10,0,0" />
                         <TextBlock x:Name="DiameterText"
                                    Grid.Row="1"
                                    Grid.Column="1"
                                    Foreground="{StaticResource Brush.App.Text}"
                                    FontSize="24"
                                    FontWeight="Bold"
-                                   Margin="24,16,0,0" />
+                                   TextAlignment="Right"
+                                   Margin="24,10,0,0" />
 
                         <TextBlock Grid.Row="2"
                                    Text="Central angle"
@@ -186,25 +217,36 @@
                                    Foreground="{StaticResource Brush.App.Text}"
                                    FontSize="20"
                                    FontWeight="SemiBold"
+                                   TextAlignment="Right"
                                    Margin="24,16,0,0" />
                     </Grid>
 
-                    <Border Background="{StaticResource Brush.App.Surface}"
-                            CornerRadius="{StaticResource Radius.Medium}"
-                            Padding="16"
-                            Margin="0,24,0,0">
+                    <Border 
+                        Grid.Column="1"
+                        Canvas.Left="318"
+                        Canvas.Top="18"
+                        Background="{StaticResource Brush.App.Surface}"
+                        BorderBrush="{StaticResource Brush.App.Muted}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource Radius.Medium}"
+                        Padding="14,12"
+                        Margin="0,40,0,0">
                         <StackPanel>
-                            <TextBlock Text="Formula"
-                                       Foreground="{StaticResource Brush.App.SubText}"
-                                       FontWeight="SemiBold" />
                             <TextBlock Text="a = AB / 2"
-                                       Foreground="{StaticResource Brush.App.Text}"
-                                       FontFamily="Consolas"
-                                       Margin="0,10,0,0" />
-                            <TextBlock Text="R = (a^2 + CD^2) / (2 * CD)"
-                                       Foreground="{StaticResource Brush.App.Text}"
-                                       FontFamily="Consolas"
-                                       Margin="0,4,0,0" />
+                                        Foreground="{StaticResource Brush.App.Text}"
+                                        FontFamily="Consolas"
+                                        FontSize="16" />
+                            <TextBlock Text="s = CD"
+                                        Foreground="{StaticResource Brush.App.Text}"
+                                        FontFamily="Consolas"
+                                        FontSize="16"
+                                        Margin="0,5,0,0" />
+                            <TextBlock Text="r = (s² + a²) / (2s)"
+                                        Foreground="{StaticResource Brush.App.Accent}"
+                                        FontFamily="Consolas"
+                                        FontSize="16"
+                                        FontWeight="SemiBold"
+                                        Margin="0,5,0,0" />
                         </StackPanel>
                     </Border>
                 </StackPanel>

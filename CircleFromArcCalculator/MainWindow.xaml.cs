@@ -10,6 +10,9 @@ namespace CircleFromArcCalculator;
 /// </summary>
 public partial class MainWindow : Window
 {
+    public const double CanvasWidth = 620.0;
+    public const double CanvasHeight = 480.0;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -23,11 +26,6 @@ public partial class MainWindow : Window
             return;
         }
 
-        CalculateAndRender();
-    }
-
-    private void CalculateClicked(object sender, RoutedEventArgs e)
-    {
         CalculateAndRender();
     }
 
@@ -70,25 +68,42 @@ public partial class MainWindow : Window
         AngleText.Text = "-";
     }
 
+    /// <summary> Renders a sketch of the circle, chord, and sagitta on the canvas. </summary>
+    /// <param name="chord">The length of the chord (AB).</param>
+    /// <param name="sagitta">The length of the sagitta (CD).</param>
+    /// <param name="radius">The calculated radius of the circle.</param>
+    /// <remarks>
+    /// The sketch is drawn in a coordinate system where the chord is centered at the origin (0,0) and
+    /// the sagitta extends upwards. The circle is then scaled and translated to fit within the canvas with margins.
+    /// </remarks>
+    /// <seealso href="https://en.wikipedia.org/wiki/Sagitta_(geometry)"/>
+    /// <seealso href="https://en.wikipedia.org/wiki/Chord_(geometry)"/>
+    /// <seealso href="https://en.wikipedia.org/wiki/Circle"/>
+    /// </summary>
     private void RenderSketch(double chord, double sagitta, double radius)
     {
-        const double canvasWidth = 520.0;
-        const double canvasHeight = 380.0;
         const double margin = 40.0;
 
+        // Calculate the bounding box of the circle and the scale to fit it within the 
+        // canvas with margins.
         double halfChord = chord / 2.0;
         double centerOffsetFromChord = radius - sagitta;
         double minX = -radius;
         double maxX = radius;
-        double minY = Math.Min(-centerOffsetFromChord - radius, -10.0);
-        double maxY = Math.Max(-centerOffsetFromChord + radius, sagitta + 10.0);
-        double scale = Math.Min((canvasWidth - (margin * 2.0)) / (maxX - minX),
-                                (canvasHeight - (margin * 2.0)) / (maxY - minY));
+        double minY = -centerOffsetFromChord - radius;
+        double maxY = -centerOffsetFromChord + radius;
+        double scale = Math.Min((CanvasWidth - (margin * 2.0)) / (maxX - minX),
+                                (CanvasHeight - (margin * 2.0)) / (maxY - minY));
 
+        // Calculate the offset to center the drawing within the canvas.
+        double offsetX = (CanvasWidth - ((maxX - minX) * scale)) / 2.0;
+        double offsetY = (CanvasHeight - ((maxY - minY) * scale)) / 2.0;
+
+        // Helper function to convert from the circle's coordinate system to canvas coordinates.
         Point ToCanvas(double x, double y)
         {
-            double canvasX = margin + ((x - minX) * scale);
-            double canvasY = margin + ((y - minY) * scale);
+            double canvasX = offsetX + ((x - minX) * scale);
+            double canvasY = offsetY + ((y - minY) * scale);
             return new Point(canvasX, canvasY);
         }
 
@@ -109,12 +124,24 @@ public partial class MainWindow : Window
         SetLine(RadiusLine, center, d);
 
         SetLabel(LabelA, a.X - 34.0, a.Y - 19.0);
-        SetLabel(LabelB, b.X + 8.0, b.Y - 19.0);
-        SetLabel(LabelC, c.X - 8.0, c.Y - 38.0);
+        SetLabel(LabelB, b.X + 14.0, b.Y - 19.0);
+        SetLabel(LabelC, c.X + 8.0, c.Y - 38.0);
         SetLabel(LabelD, d.X - 8.0, d.Y + 4.0);
-        SetLabel(LabelO, center.X + 8.0, center.Y - 28.0);
+        SetLabel(LabelO, center.X + 10.0, center.Y - 28.0);
+        SetLabel(LabelX, center.X - 11.0, center.Y - 20.0);
     }
-
+    
+    /// <summary>
+    /// Sets the start and end points of a line element.
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <remarks>
+    /// The line's coordinates are set directly, as the line is positioned absolutely
+    /// on the canvas based on the calculated points.
+    /// </remarks>
+    /// </summary>
     private static void SetLine(Line line, Point start, Point end)
     {
         line.X1 = start.X;
