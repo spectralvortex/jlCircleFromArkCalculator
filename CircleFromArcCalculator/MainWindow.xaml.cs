@@ -47,7 +47,7 @@ public partial class MainWindow : Window
         ValidationText.Text = string.Empty;
         RadiusText.Text = $"{radius:N3} mm";
         DiameterText.Text = $"{diameter:N3} mm";
-        AngleText.Text = $"{centralAngleDegrees:N2} deg";
+        AngleText.Text = $"{centralAngleDegrees:N2} °";
 
         RenderSketch(chord, sagitta, radius);
     }
