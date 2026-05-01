@@ -13,3 +13,5 @@ test_output/
 *.design
 SKILL.md
 .docs/
+*Distribution*/
+*.zip
