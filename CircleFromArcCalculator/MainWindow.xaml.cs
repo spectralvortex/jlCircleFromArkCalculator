@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -16,7 +17,24 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        Title = $"jl{{Circle From Arc Calculator}} – version {GetAppVersion()}";
         CalculateAndRender();
+    }
+
+    private static string GetAppVersion()
+    {
+        string? informationalVersion = Assembly.GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+            .Split('+')[0];
+
+        if (!string.IsNullOrWhiteSpace(informationalVersion))
+        {
+            return informationalVersion;
+        }
+
+        Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+        return version is null ? "0.0.0" : $"{version.Major}.{version.Minor}.{version.Build}";
     }
 
     private void InputChanged(object sender, TextChangedEventArgs e)
