@@ -10,6 +10,7 @@
         Height="740"
         MinWidth="840"
         MinHeight="740"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource Brush.App.Background}"
         FontFamily="{StaticResource Font.App}">
