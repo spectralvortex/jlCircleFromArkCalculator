@@ -46,7 +46,10 @@
                 Grid.Column="1"
                 Width="Auto"
                 Height="Auto"
-                Stretch="Uniform" />
+                Stretch="Uniform"
+                Cursor="Hand"
+                MouseLeftButtonUp="AboutIconClicked"
+                ToolTip="About Circle From Arc Calculator" />
         </Grid>
 
         <Border Grid.Row="1"

@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace CircleFromArcCalculator;
@@ -45,6 +46,16 @@ public partial class MainWindow : Window
         }
 
         CalculateAndRender();
+    }
+
+    private void AboutIconClicked(object sender, MouseButtonEventArgs e)
+    {
+        MessageBox.Show(
+            this,
+            "Developed by Jan Lægreid & Codex - Licensed under MIT License",
+            "About Circle From Arc Calculator",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
     }
 
     private void CalculateAndRender()
