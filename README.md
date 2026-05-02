@@ -1,3 +1,7 @@
+<div style="text-align: center">
+    <img src="app_icon_image.png" alt="AppIcon" width="200">
+</div>
+
 # Circle From Arc Calculator
 
 Made in the spirit of "Why the heck not?..." and a fun time cooperating with AI agents.
