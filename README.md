@@ -1,6 +1,12 @@
 # Circle From Arc Calculator
 
-A WPF calculator for finding the full circle radius and diameter from:
+Made in the spirit of "Why the heck not?..." and a fun time cooperating with AI agents.
+
+Enjoy!
+
+## What it is
+
+A WPF calculator for in a totally unneccesary and over overengineered way finding the full circle radius and diameter from:
 
 - `AB`: chord length in millimeters
 - `CD`: sagitta height in millimeters, measured at 90 degrees from the chord midpoint to the arc
